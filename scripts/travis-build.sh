@@ -10,13 +10,13 @@
 
 set -ex
 
-./scripts/shrink-test-output.py cargo test --color always
-
 if [ $TRAVIS_RUST_VERSION = nightly ]
 then
-    ./scripts/shrink-test-output.py cargo test --color always --features unstable
-
+    cargo test --features "rustc-test/capture"
+    cargo test --features "rustc-test/capture unstable"
     cargo test --manifest-path capi/Cargo.toml
+else
+    cargo test
 fi
 
 cargo doc
